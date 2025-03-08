@@ -116,6 +116,10 @@ export default {
                     '0%': { opacity: '0', transform: 'scale(0) rotate(0deg)' },
                     '50%': { opacity: '1' },
                     '100%': { opacity: '0', transform: 'scale(1.5) rotate(360deg)' },
+                },
+                'bounce-slow': {
+                    '0%, 100%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(-15px)' },
                 }
 			},
 			animation: {
@@ -124,6 +128,7 @@ export default {
                 'float': 'float 6s ease-in-out infinite',
                 'heartbeat': 'heartbeat 1.5s ease-in-out infinite',
                 'spark': 'spark 2s ease-in-out infinite',
+                'bounce-slow': 'bounce-slow 4s ease-in-out infinite',
 			}
 		}
 	},
