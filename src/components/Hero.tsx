@@ -40,8 +40,8 @@ const Hero = () => {
         {/* Featured image in a decorative frame */}
         <div className="relative mx-auto w-48 h-48 md:w-64 md:h-64 mb-8 rounded-full overflow-hidden border-4 border-white/50 shadow-xl">
           <img 
-            src="/lovable-uploads/69afb25e-9a7d-424a-9823-3aad8af92f1d.png" 
-            alt="Saatwi with a rose" 
+            src="/lovable-uploads/5e1a5212-56a1-4c2f-b12d-10c917183506.png" 
+            alt="Saatwi in traditional dress" 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-love-500/30 to-transparent"></div>

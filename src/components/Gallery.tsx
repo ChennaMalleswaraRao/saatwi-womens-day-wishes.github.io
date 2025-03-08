@@ -9,7 +9,7 @@ const Gallery = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const { toast } = useToast();
 
-  // Real gallery items with uploaded images
+  // Gallery items with all uploaded images
   const galleryItems = [
     {
       id: 1,
@@ -34,6 +34,48 @@ const Gallery = () => {
       image: "/lovable-uploads/c4514323-f7eb-4389-b361-e55eb38f8e16.png",
       title: "Sunset Views",
       description: "Every sunset is more beautiful with you by my side"
+    },
+    {
+      id: 5,
+      image: "/lovable-uploads/5e1a5212-56a1-4c2f-b12d-10c917183506.png",
+      title: "Yellow Elegance",
+      description: "You look stunning in your traditional attire"
+    },
+    {
+      id: 6,
+      image: "/lovable-uploads/083b742d-506a-4d14-a3a7-b9ad5db85d25.png",
+      title: "Graduation Day",
+      description: "So proud of your achievements and determination"
+    },
+    {
+      id: 7,
+      image: "/lovable-uploads/472619f9-66de-4257-a29b-60a0ef3ceabb.png",
+      title: "Mall Adventures",
+      description: "Shopping days are always better with you"
+    },
+    {
+      id: 8,
+      image: "/lovable-uploads/8e7d1eec-4489-46a9-bced-96e1bf31f15b.png",
+      title: "Night Lights",
+      description: "The stars in your eyes outshine the night sky"
+    },
+    {
+      id: 9,
+      image: "/lovable-uploads/f356796f-e124-4eeb-b720-6bfa22306808.png",
+      title: "Lakeside Memories",
+      description: "Creating peaceful memories by the water"
+    },
+    {
+      id: 10,
+      image: "/lovable-uploads/aa61aadd-b608-4d2a-8e1c-fa954801decd.png",
+      title: "Stylish Together",
+      description: "Looking fabulous as always, my love"
+    },
+    {
+      id: 11,
+      image: "/lovable-uploads/47c20d8e-eb2a-41a9-badf-1a632677aaf1.png",
+      title: "Sweet Closeness",
+      description: "I cherish these intimate moments with you"
     }
   ];
 
@@ -70,7 +112,7 @@ const Gallery = () => {
         Our Beautiful Memories
       </h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {galleryItems.map((item, index) => (
           <Card 
             key={item.id} 
@@ -81,7 +123,7 @@ const Gallery = () => {
               <img 
                 src={item.image} 
                 alt={item.title} 
-                className="w-full h-72 md:h-96 object-cover group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                 <h3 className="text-white text-xl font-dancing mb-2">{item.title}</h3>
