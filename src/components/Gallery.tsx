@@ -1,9 +1,14 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Heart } from "lucide-react";
+import { Heart, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const Gallery = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const { toast } = useToast();
+
   // Real gallery items with uploaded images
   const galleryItems = [
     {
@@ -32,6 +37,33 @@ const Gallery = () => {
     }
   ];
 
+  const openImage = (index: number) => {
+    setActiveIndex(index);
+  };
+
+  const closeImage = () => {
+    setActiveIndex(null);
+  };
+
+  const navigateImage = (direction: 'prev' | 'next') => {
+    if (activeIndex === null) return;
+    
+    if (direction === 'prev') {
+      setActiveIndex((prev) => (prev === 0 ? galleryItems.length - 1 : prev - 1));
+    } else {
+      setActiveIndex((prev) => (prev === galleryItems.length - 1 ? 0 : prev + 1));
+    }
+  };
+
+  const handleFavorite = (event: React.MouseEvent, item: typeof galleryItems[0]) => {
+    event.stopPropagation();
+    toast({
+      title: "Favorite Added!",
+      description: `Added "${item.title}" to your favorites`,
+      variant: "default",
+    });
+  };
+
   return (
     <div className="my-12 px-4">
       <h2 className="text-3xl md:text-4xl font-dancing text-love-700 text-center mb-8">
@@ -39,8 +71,12 @@ const Gallery = () => {
       </h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-        {galleryItems.map((item) => (
-          <Card key={item.id} className="overflow-hidden group hover:shadow-xl transition-all duration-300 border-love-200">
+        {galleryItems.map((item, index) => (
+          <Card 
+            key={item.id} 
+            className="overflow-hidden group hover:shadow-xl transition-all duration-300 border-love-200 cursor-pointer"
+            onClick={() => openImage(index)}
+          >
             <div className="relative">
               <img 
                 src={item.image} 
@@ -50,7 +86,10 @@ const Gallery = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                 <h3 className="text-white text-xl font-dancing mb-2">{item.title}</h3>
                 <p className="text-white/90 text-base font-montserrat">{item.description}</p>
-                <div className="absolute top-4 right-4 bg-love-500/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div 
+                  className="absolute top-4 right-4 bg-love-500/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  onClick={(e) => handleFavorite(e, item)}
+                >
                   <Heart className="w-5 h-5 text-white" fill="white" />
                 </div>
               </div>
@@ -64,6 +103,52 @@ const Gallery = () => {
           Our journey together is filled with beautiful moments, and I cherish each one of them with you...
         </p>
       </div>
+
+      {/* Full-screen image modal */}
+      {activeIndex !== null && (
+        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center" onClick={closeImage}>
+          <div className="relative w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="absolute top-4 right-4 text-white hover:bg-white/20 z-10"
+              onClick={closeImage}
+            >
+              <X className="w-6 h-6" />
+            </Button>
+            
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 z-10"
+              onClick={() => navigateImage('prev')}
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </Button>
+            
+            <div className="max-w-[90%] max-h-[90%] overflow-hidden rounded-lg">
+              <img 
+                src={galleryItems[activeIndex].image} 
+                alt={galleryItems[activeIndex].title} 
+                className="max-w-full max-h-[80vh] object-contain"
+              />
+              <div className="bg-black/60 p-4 text-center">
+                <h3 className="text-white text-2xl font-dancing mb-2">{galleryItems[activeIndex].title}</h3>
+                <p className="text-white/90 text-base font-montserrat">{galleryItems[activeIndex].description}</p>
+              </div>
+            </div>
+            
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 z-10"
+              onClick={() => navigateImage('next')}
+            >
+              <ChevronRight className="w-8 h-8" />
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
